@@ -1,27 +1,21 @@
-from rest_framework import viewsets
+from rest_framework import status, viewsets
 from rest_framework.filters import SearchFilter
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from .models import Book
-from .serializers import BookSerializer
+from .models import Book, Favorite
+from .serializers import BookSerializer, FavoriteSerializer
 
 
 class BookViewSet(viewsets.ModelViewSet):
-    queryset = Book.objects.all().order_by('-created_at')
+    queryset = Book.objects.all().order_by("-created_at")
 
     serializer_class = BookSerializer
 
     filter_backends = [SearchFilter]
 
-    search_fields = ['title', 'author', 'genre', 'category']
+    search_fields = ["title", "author", "genre", "category"]
 
-from rest_framework.views import APIView
-
-from rest_framework.response import Response
-
-from rest_framework import status
-
-from .models import Favorite
-from .serializers import FavoriteSerializer
 
 class FavoriteListCreateView(APIView):
     def get(self, request):
@@ -32,11 +26,10 @@ class FavoriteListCreateView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        book_id = request.data.get('book_id')
+        book_id = request.data.get("book_id")
 
         favorite, created = Favorite.objects.get_or_create(
-            user_id=1,
-            book_id=book_id
+            user_id=request.user.id, book_id=book_id
         )
 
         serializer = FavoriteSerializer(favorite)

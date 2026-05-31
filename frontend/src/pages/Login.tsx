@@ -1,41 +1,37 @@
-import { useState } from 'react'
-import { login } from '../api/auth.api'
-import { setToken } from '../utils/token'
-import { useNavigate, Link } from 'react-router-dom'
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useLocalStorage } from 'usehooks-ts';
+import { login } from '../api/auth.api';
 
 const Login = () => {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+	const [_, setToken] = useLocalStorage('token', '');
 
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [error, setError] = useState('')
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [error, setError] = useState('');
 
 	const handleLogin = async (e: React.FormEvent) => {
-		e.preventDefault()
+		e.preventDefault();
 
 		try {
-			const data = await login({ email, password })
+			const data = await login({ email, password });
 
 			if (data.access) {
-				setToken(data.access)
+				setToken(data.access);
 
-				navigate('/')
+				navigate('/');
 			}
 		} catch {
-			setError('Invalid email or password')
+			setError('Invalid email or password');
 		}
-	}
+	};
 
 	return (
 		<div className='w-full max-w-md bg-[#1E293B] p-8 rounded-3xl shadow-2xl'>
-			<h1 className='text-4xl font-bold text-white text-center'>
-				Login
-			</h1>
+			<h1 className='text-4xl font-bold text-white text-center'>Login</h1>
 
-			<form
-				onSubmit={handleLogin}
-				className='mt-10 flex flex-col gap-5'
-			>
+			<form onSubmit={handleLogin} className='mt-10 flex flex-col gap-5'>
 				<input
 					type='email'
 					value={email}
@@ -52,11 +48,7 @@ const Login = () => {
 					className='bg-[#0F172A] text-white px-5 py-4 rounded-xl outline-none border border-transparent focus:border-[#6366F1]'
 				/>
 
-				{error && (
-					<p className='text-red-400 text-sm'>
-						{error}
-					</p>
-				)}
+				{error && <p className='text-red-400 text-sm'>{error}</p>}
 
 				<button className='bg-[#6366F1] hover:bg-[#4F46E5] transition py-4 rounded-xl text-white font-semibold'>
 					Login
@@ -70,7 +62,7 @@ const Login = () => {
 				</Link>
 			</p>
 		</div>
-	)
-}
+	);
+};
 
-export default Login
+export default Login;

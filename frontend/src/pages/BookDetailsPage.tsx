@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { API_URL } from '../config/api'
 import { getBookById } from '../api/books.api'
 import type { Book } from '../types/book.types'
 
@@ -36,7 +35,7 @@ const BookDetailsPage = () => {
 		<div className='text-white'>
 			<div className='flex gap-10 max-lg:flex-col'>
 				<img
-					src={`${API_URL}${book.image}`}
+					src={new URL(book.image).pathname}
 					alt={book.title}
 					className='w-[300px] rounded-3xl shadow-2xl'
 				/>

@@ -13,7 +13,7 @@ const BookCard = ({ book, isLiked, toggleFavorite }: Props) => {
 		<div className='flex items-center py-5  border-gray-200'>
 			<div className='flex-1 flex items-center gap-5'>
 				<img
-					src={book.image}
+					src={new URL(book.image).pathname}
 					alt={book.title}
 					className='w-[75px] h-[99px] rounded-lg object-cover max-lg:hidden'
 				/>

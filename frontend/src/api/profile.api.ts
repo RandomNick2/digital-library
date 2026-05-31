@@ -1,29 +1,16 @@
-import axios from 'axios'
-import { getToken } from '../utils/token'
-
-const API_URL = 'http://127.0.0.1:8000/api'
+import { http } from '.';
 
 export const getProfile = async () => {
-	const response = await axios.get(`${API_URL}/profile/`, {
-		headers: {
-			Authorization: `Bearer ${getToken()}`,
-		},
-	})
-
-	return response.data
-}
+	const response = await http.get(`/profile/`);
+	return response.data;
+};
 
 export const updateProfile = async (formData: FormData) => {
-	const response = await axios.patch(
-		`${API_URL}/profile/`,
-		formData,
-		{
-			headers: {
-				Authorization: `Bearer ${getToken()}`,
-				'Content-Type': 'multipart/form-data',
-			},
-		}
-	)
+	const response = await http.patch(`/profile/`, formData, {
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+	});
 
-	return response.data
-}
+	return response.data;
+};

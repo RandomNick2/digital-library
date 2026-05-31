@@ -1,29 +1,18 @@
-import { API_URL } from '../config/api'
+import { http } from '.';
 
 export const getFavorites = async () => {
-	const response = await fetch(`${API_URL}/api/favorites/`)
-
-	return response.json()
-}
+	const response = await http.get(`/favorites/`);
+	return response.data;
+};
 
 export const addFavorite = async (bookId: number) => {
-	const response = await fetch(`${API_URL}/api/favorites/`, {
-		method: 'POST',
+	const response = await http.post(`/favorites/`, {
+		book_id: bookId,
+	});
 
-		headers: {
-			'Content-Type': 'application/json',
-		},
-
-		body: JSON.stringify({
-			book_id: bookId,
-		}),
-	})
-
-	return response.json()
-}
+	return response.data;
+};
 
 export const removeFavorite = async (favoriteId: number) => {
-	await fetch(`${API_URL}/api/favorites/${favoriteId}/`, {
-		method: 'DELETE',
-	})
-}
+	await http.delete(`/favorites/${favoriteId}/`);
+};

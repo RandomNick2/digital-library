@@ -1,47 +1,27 @@
-import { useEffect, useState } from 'react'
-import { getProfile } from '../api/profile.api'
+import { Link } from 'react-router-dom';
+import { useProfile } from '../hook/useProfile';
 
 const Profile = () => {
-	const [nickname, setNickname] = useState('User')
-	const [avatar, setAvatar] = useState('')
-
-	useEffect(() => {
-		const fetchProfile = async () => {
-			try {
-				const data = await getProfile()
-
-				setNickname(data.nickname)
-
-				if (data.avatar) {
-					setAvatar(data.avatar)
-				}
-			} catch (error) {
-				console.log(error)
-			}
-		}
-
-		fetchProfile()
-	}, [])
+	const { profile } = useProfile();
 
 	return (
-		<div className='flex items-center xl:gap-4 gap-1 bg-[#232839] rounded-[40px] xl:pr-4 pr-4 py-1'>
+		<Link
+			to='/profile'
+			className='flex items-center xl:gap-4 gap-1 bg-[#232839] rounded-[40px] xl:pr-4 pr-4 py-1'
+		>
 			<img
 				src={
-					avatar
-						? `http://127.0.0.1:8000${avatar}`
+					profile.avatar
+						? profile.avatar
 						: '/ProfileIcon.svg'
 				}
 				alt=''
 				className='w-10 h-10 rounded-full object-cover'
 			/>
 
-			<h2>{nickname}</h2>
+			<h2>{profile.nickname}</h2>
+		</Link>
+	);
+};
 
-			<span className='text-[10px]'>
-				▼
-			</span>
-		</div>
-	)
-}
-
-export default Profile
+export default Profile;

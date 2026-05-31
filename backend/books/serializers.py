@@ -1,13 +1,15 @@
 from rest_framework import serializers
-from .models import Book
+
+from .models import Book, Favorite
 
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = "__all__"
 
-from .models import Favorite
+    def get_img_url(self, obj):
+        return obj.image.url if obj.image else None
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
@@ -15,4 +17,4 @@ class FavoriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Favorite
-        fields = ['id', 'book']
+        fields = ["id", "book"]

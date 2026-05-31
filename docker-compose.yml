@@ -1,28 +1,21 @@
 services:
   backend:
     build: ./backend
-    container_name: django_backend
-
-    command: sh -c "sleep 5 && python manage.py runserver 0.0.0.0:8000"
-
+    command: sh -c "sleep 5 && python manage.py runserver 0.0.0.0:8001"
     volumes:
       - ./backend:/app
-
     ports:
-      - '8000:8000'
+      - 8001:8001
+    networks:
+      - digital_library
 
-    depends_on:
-      - db
-
-  db:
-    image: postgres:17
-
-    container_name: postgres_db
-
-    environment:
-      POSTGRES_DB: digital_library
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-
+  frontend:
+    build: ./frontend
     ports:
-      - '5432:5432'
+      - "67:67"
+    networks:
+      - digital_library
+
+networks:
+  digital_library:
+    driver: bridge

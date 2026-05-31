@@ -1,22 +1,22 @@
-import { API_URL } from '../config/api'
-import type { Book } from '../types/book.types'
+import { http } from '.';
+import type { Book } from '../types/book.types';
 
 export const getBooks = async (): Promise<Book[]> => {
-	const response = await fetch(`${API_URL}/api/books/`)
+	const response = await http.get(`/books/`);
 
-	if (!response.ok) {
-		throw new Error('Failed to fetch books')
+	if (response.status !== 200) {
+		throw new Error('Failed to fetch books');
 	}
 
-	return response.json()
-}
+	return response.data;
+};
 
 export const getBookById = async (id: string): Promise<Book> => {
-	const response = await fetch(`${API_URL}/api/books/${id}/`)
+	const response = await http.get(`/books/${id}/`);
 
-	if (!response.ok) {
-		throw new Error('Book not found')
+	if (response.status !== 200) {
+		throw new Error('Failed to fetch books');
 	}
 
-	return response.json()
-}
+	return response.data;
+};

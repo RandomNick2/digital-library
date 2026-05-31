@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+	import { useEffect, useState } from 'react'
 import {
 	getProfile,
 	updateProfile,
@@ -69,7 +69,7 @@ const ProfilePage = () => {
 				<img
 					src={
 						avatarPreview
-							? `http://127.0.0.1:8000${avatarPreview}`
+							? avatarPreview
 							: '/ProfileAvatar.svg'
 					}
 					alt=''
