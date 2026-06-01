@@ -19,7 +19,7 @@ const Profile = () => {
 				className='w-10 h-10 rounded-full object-cover'
 			/>
 
-			<h2>{profile.nickname}</h2>
+			<h2 className='text-white'>{profile.nickname}</h2>
 		</Link>
 	);
 };
