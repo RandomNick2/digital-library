@@ -10,9 +10,11 @@ const Search = () => {
 		queryFn: () => getBooks(),
 	});
 
-	const filteredBooks = data?.filter(book =>
-		book.title.toLowerCase().includes(search.toLowerCase()),
-	);
+	const filteredBooks = data
+		? data.filter(book =>
+				book.title.toLowerCase().includes(search.toLowerCase()),
+			)
+		: [];
 
 	return (
 		<div className=''>
@@ -25,14 +27,15 @@ const Search = () => {
 			/>
 			{search.trim() !== '' && (
 				<div className='mt-5 flex flex-col absolute gap-2'>
-					{filteredBooks && filteredBooks.map((book, index) => (
-						<div
-							className='bg-[#232839] text-white px-10 py-1 rounded-[40px]'
-							key={index}
-						>
-							{book.title}
-						</div>
-					))}
+					{filteredBooks &&
+						filteredBooks.map((book, index) => (
+							<div
+								className='bg-[#232839] text-white px-10 py-1 rounded-[40px]'
+								key={index}
+							>
+								{book.title}
+							</div>
+						))}
 				</div>
 			)}
 		</div>
